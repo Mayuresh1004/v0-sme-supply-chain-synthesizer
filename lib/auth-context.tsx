@@ -73,7 +73,7 @@ function clearPersistedUser() {
 const DEMO_USERS: Record<string, { password: string; user: User }> = {
   "admin@invenza.com": {
     password: "admin123",
-    user: { id: "1", name: "Sarah Chen", email: "admin@invenza.com" },
+    user: { id: "1", name: "Mayuresh", email: "admin@invenza.com" },
   },
   "manager@invenza.com": {
     password: "manager123",

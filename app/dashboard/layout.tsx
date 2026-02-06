@@ -13,16 +13,18 @@ import { LoadingState } from "@/components/loading-state"
  * Redirects unauthenticated users to the login page.
  */
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, isLoading } = useAuth()
+  const { isAuthenticated, isLoading, isHydrating } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    // Wait until hydration is complete before making redirect decisions
+    if (!isHydrating && !isLoading && !isAuthenticated) {
       router.replace("/login")
     }
-  }, [isAuthenticated, isLoading, router])
+  }, [isAuthenticated, isLoading, isHydrating, router])
 
-  if (!isAuthenticated) {
+  // Show loading while hydrating or if not yet authenticated (may still resolve)
+  if (isHydrating || !isAuthenticated) {
     return (
       <div className="flex h-screen items-center justify-center">
         <LoadingState />

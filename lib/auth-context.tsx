@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react"
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react"
 
 /** User roles supported by the platform */
 export type UserRole = "admin" | "manager"
@@ -17,6 +17,8 @@ interface AuthContextValue {
   user: User | null
   isAuthenticated: boolean
   isLoading: boolean
+  /** True while initial hydration check is running */
+  isHydrating: boolean
   login: (email: string, password: string) => Promise<void>
   register: (name: string, email: string, password: string, role: UserRole) => Promise<void>
   logout: () => void
@@ -25,10 +27,11 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | undefined>(undefined)
 
 /**
- * Mock JWT token helpers.
+ * Mock JWT token + user persistence helpers.
  * In production these would interact with httpOnly cookies / secure storage.
  */
 const TOKEN_KEY = "aio5_token"
+const USER_KEY = "aio5_user"
 
 function setToken(token: string) {
   if (typeof window !== "undefined") {
@@ -36,9 +39,37 @@ function setToken(token: string) {
   }
 }
 
+function getToken(): string | null {
+  if (typeof window === "undefined") return null
+  const match = document.cookie.match(new RegExp(`(?:^|; )${TOKEN_KEY}=([^;]*)`))
+  return match ? match[1] : null
+}
+
 function clearToken() {
   if (typeof window !== "undefined") {
     document.cookie = `${TOKEN_KEY}=; path=/; max-age=0`
+  }
+}
+
+function persistUser(user: User) {
+  if (typeof window !== "undefined") {
+    sessionStorage.setItem(USER_KEY, JSON.stringify(user))
+  }
+}
+
+function loadPersistedUser(): User | null {
+  if (typeof window === "undefined") return null
+  try {
+    const raw = sessionStorage.getItem(USER_KEY)
+    return raw ? (JSON.parse(raw) as User) : null
+  } catch {
+    return null
+  }
+}
+
+function clearPersistedUser() {
+  if (typeof window !== "undefined") {
+    sessionStorage.removeItem(USER_KEY)
   }
 }
 
@@ -57,27 +88,47 @@ const DEMO_USERS: Record<string, { password: string; user: User }> = {
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isHydrating, setIsHydrating] = useState(true)
 
-  const login = useCallback(async (email: string, _password: string) => {
+  /** On mount, rehydrate user from session if a token cookie exists */
+  useEffect(() => {
+    const token = getToken()
+    if (token) {
+      const persisted = loadPersistedUser()
+      if (persisted) {
+        setUser(persisted)
+      }
+    }
+    setIsHydrating(false)
+  }, [])
+
+  const login = useCallback(async (email: string, password: string) => {
     setIsLoading(true)
     // Simulate API latency
     await new Promise((r) => setTimeout(r, 800))
 
     const entry = DEMO_USERS[email]
-    if (!entry) {
-      // Allow any email/password combo for demo – defaults to manager role
-      const mockUser: User = {
+    if (entry && entry.password !== password) {
+      setIsLoading(false)
+      throw new Error("Invalid credentials")
+    }
+
+    let loggedInUser: User
+    if (entry) {
+      loggedInUser = entry.user
+    } else {
+      // Allow any email/password combo for demo -- defaults to manager role
+      loggedInUser = {
         id: "99",
         name: email.split("@")[0],
         email,
         role: "manager",
       }
-      setToken("mock-jwt-token")
-      setUser(mockUser)
-    } else {
-      setToken("mock-jwt-token")
-      setUser(entry.user)
     }
+
+    setToken("mock-jwt-token")
+    persistUser(loggedInUser)
+    setUser(loggedInUser)
     setIsLoading(false)
   }, [])
 
@@ -87,6 +138,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await new Promise((r) => setTimeout(r, 800))
       const newUser: User = { id: Date.now().toString(), name, email, role }
       setToken("mock-jwt-token")
+      persistUser(newUser)
       setUser(newUser)
       setIsLoading(false)
     },
@@ -95,11 +147,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = useCallback(() => {
     clearToken()
+    clearPersistedUser()
     setUser(null)
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, isLoading, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ user, isAuthenticated: !!user, isLoading, isHydrating, login, register, logout }}
+    >
       {children}
     </AuthContext.Provider>
   )

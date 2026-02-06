@@ -2,15 +2,11 @@
 
 import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react"
 
-/** User roles supported by the platform */
-export type UserRole = "admin" | "manager"
-
 /** Authenticated user shape */
 export interface User {
   id: string
   name: string
   email: string
-  role: UserRole
 }
 
 interface AuthContextValue {
@@ -20,7 +16,7 @@ interface AuthContextValue {
   /** True while initial hydration check is running */
   isHydrating: boolean
   login: (email: string, password: string) => Promise<void>
-  register: (name: string, email: string, password: string, role: UserRole) => Promise<void>
+  register: (name: string, email: string, password: string) => Promise<void>
   logout: () => void
 }
 
@@ -77,11 +73,11 @@ function clearPersistedUser() {
 const DEMO_USERS: Record<string, { password: string; user: User }> = {
   "admin@aio5.com": {
     password: "admin123",
-    user: { id: "1", name: "Sarah Chen", email: "admin@aio5.com", role: "admin" },
+    user: { id: "1", name: "Sarah Chen", email: "admin@aio5.com" },
   },
   "manager@aio5.com": {
     password: "manager123",
-    user: { id: "2", name: "James Rivera", email: "manager@aio5.com", role: "manager" },
+    user: { id: "2", name: "James Rivera", email: "manager@aio5.com" },
   },
 }
 
@@ -117,12 +113,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (entry) {
       loggedInUser = entry.user
     } else {
-      // Allow any email/password combo for demo -- defaults to manager role
+      // Allow any email/password combo for demo
       loggedInUser = {
         id: "99",
         name: email.split("@")[0],
         email,
-        role: "manager",
       }
     }
 
@@ -133,10 +128,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const register = useCallback(
-    async (name: string, email: string, _password: string, role: UserRole) => {
+    async (name: string, email: string, _password: string) => {
       setIsLoading(true)
       await new Promise((r) => setTimeout(r, 800))
-      const newUser: User = { id: Date.now().toString(), name, email, role }
+      const newUser: User = { id: Date.now().toString(), name, email }
       setToken("mock-jwt-token")
       persistUser(newUser)
       setUser(newUser)

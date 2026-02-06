@@ -84,8 +84,8 @@ export default function LoginPage() {
               {/* Demo credentials hint */}
               <div className="rounded-lg border bg-muted/50 p-3 text-xs text-muted-foreground space-y-1">
                 <p className="font-medium text-foreground">Demo Credentials</p>
-                <p>Admin: admin@aio5.com / admin123</p>
-                <p>Manager: manager@aio5.com / manager123</p>
+                <p>admin@aio5.com / admin123</p>
+                <p>manager@aio5.com / manager123</p>
               </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-3">

@@ -8,7 +8,7 @@ import { KPICard } from "@/components/kpi-card"
 import { SalesForecastChart, StockLevelsChart } from "@/components/dashboard-charts"
 import { LoadingState } from "@/components/loading-state"
 import { DollarSign, PackageMinus, Truck, TrendingUp } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+
 
 const KPI_ICONS = [
   <DollarSign key="dol" className="h-4 w-4" />,
@@ -46,11 +46,6 @@ export default function DashboardPage() {
       <PageHeader
         title={`Welcome back, ${user?.name?.split(" ")[0] ?? "User"}`}
         description="Here is an overview of your supply chain operations."
-        actions={
-          <Badge variant="outline" className="text-xs capitalize">
-            {user?.role}
-          </Badge>
-        }
       />
 
       {/* KPI Grid */}

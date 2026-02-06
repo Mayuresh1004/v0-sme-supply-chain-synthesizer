@@ -5,11 +5,10 @@ import React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { useAuth, type UserRole } from "@/lib/auth-context"
+import { useAuth } from "@/lib/auth-context"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Loader2 } from "lucide-react"
 
@@ -19,7 +18,6 @@ export default function RegisterPage() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [role, setRole] = useState<UserRole>("manager")
   const [error, setError] = useState("")
 
   async function handleSubmit(e: React.FormEvent) {
@@ -30,7 +28,7 @@ export default function RegisterPage() {
       return
     }
     try {
-      await register(name, email, password, role)
+      await register(name, email, password)
       router.replace("/dashboard")
     } catch {
       setError("Registration failed. Please try again.")
@@ -86,18 +84,7 @@ export default function RegisterPage() {
                   autoComplete="new-password"
                 />
               </div>
-              <div className="space-y-2">
-                <Label>Role</Label>
-                <Select value={role} onValueChange={(v) => setRole(v as UserRole)}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="manager">Manager</SelectItem>
-                    <SelectItem value="admin">Admin</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+
             </CardContent>
             <CardFooter className="flex flex-col gap-3">
               <Button type="submit" className="w-full" disabled={isLoading}>

@@ -40,9 +40,9 @@ export default function LoginPage() {
         {/* Branding */}
         <div className="flex flex-col items-center gap-2 text-center">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground font-bold text-lg">
-            A5
+            Iz
           </div>
-          <h1 className="text-2xl font-bold tracking-tight">AIO5</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Invenza</h1>
           <p className="text-sm text-muted-foreground">SME Supply-Chain Synthesizer</p>
         </div>
 
@@ -63,7 +63,7 @@ export default function LoginPage() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="admin@aio5.com"
+                  placeholder="admin@invenza.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
@@ -84,8 +84,8 @@ export default function LoginPage() {
               {/* Demo credentials hint */}
               <div className="rounded-lg border bg-muted/50 p-3 text-xs text-muted-foreground space-y-1">
                 <p className="font-medium text-foreground">Demo Credentials</p>
-                <p>admin@aio5.com / admin123</p>
-                <p>manager@aio5.com / manager123</p>
+                <p>admin@invenza.com / admin123</p>
+                <p>manager@invenza.com / manager123</p>
               </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-3">

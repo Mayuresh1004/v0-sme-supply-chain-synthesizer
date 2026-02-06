@@ -1,5 +1,5 @@
 /**
- * Central API service layer for AIO5.
+ * Central API service layer for Invenza.
  *
  * All API calls go through this module so we can swap between
  * mock data and real endpoints with a single toggle.
@@ -219,7 +219,7 @@ const MOCK_ALERTS: Alert[] = [
   { id: "5", type: "vendor-risk", title: "Vendor Risk: FabricWorld", message: "Defect rate increased to 5.2%. Consider alternative vendors.", timestamp: "2026-02-04T16:45:00Z", read: true },
   { id: "6", type: "reorder", title: "Reorder: Cotton Weave Roll", message: "Demand forecast indicates need for 300 units in next 14 days.", timestamp: "2026-02-04T10:30:00Z", read: true },
   { id: "7", type: "low-stock", title: "Low Stock: LED Module RGB", message: "Stock at 45 units, below threshold of 100.", timestamp: "2026-02-03T09:00:00Z", read: true },
-  { id: "8", type: "general", title: "System Update", message: "AIO5 v2.4 deployed. New demand forecasting model active.", timestamp: "2026-02-02T08:00:00Z", read: true },
+  { id: "8", type: "general", title: "System Update", message: "Invenza v2.4 deployed. New demand forecasting model active.", timestamp: "2026-02-02T08:00:00Z", read: true },
 ]
 
 const MOCK_BLOCKCHAIN: BlockchainEntry[] = [

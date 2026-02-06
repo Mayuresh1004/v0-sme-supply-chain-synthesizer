@@ -40,9 +40,9 @@ export default function RegisterPage() {
       <div className="w-full max-w-md space-y-6">
         <div className="flex flex-col items-center gap-2 text-center">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground font-bold text-lg">
-            A5
+            Iz
           </div>
-          <h1 className="text-2xl font-bold tracking-tight">AIO5</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Invenza</h1>
           <p className="text-sm text-muted-foreground">Create your account</p>
         </div>
 

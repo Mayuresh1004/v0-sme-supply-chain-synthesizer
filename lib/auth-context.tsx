@@ -26,8 +26,8 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined)
  * Mock JWT token + user persistence helpers.
  * In production these would interact with httpOnly cookies / secure storage.
  */
-const TOKEN_KEY = "aio5_token"
-const USER_KEY = "aio5_user"
+const TOKEN_KEY = "invenza_token"
+const USER_KEY = "invenza_user"
 
 function setToken(token: string) {
   if (typeof window !== "undefined") {
@@ -71,13 +71,13 @@ function clearPersistedUser() {
 
 /** Demo users for the mock login */
 const DEMO_USERS: Record<string, { password: string; user: User }> = {
-  "admin@aio5.com": {
+  "admin@invenza.com": {
     password: "admin123",
-    user: { id: "1", name: "Sarah Chen", email: "admin@aio5.com" },
+    user: { id: "1", name: "Sarah Chen", email: "admin@invenza.com" },
   },
-  "manager@aio5.com": {
+  "manager@invenza.com": {
     password: "manager123",
-    user: { id: "2", name: "James Rivera", email: "manager@aio5.com" },
+    user: { id: "2", name: "James Rivera", email: "manager@invenza.com" },
   },
 }
 

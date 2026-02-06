@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" })
 
 export const metadata: Metadata = {
-  title: "AIO5 | SME Supply-Chain Synthesizer",
+  title: "Invenza | SME Supply-Chain Synthesizer",
   description: "Intelligent supply-chain management platform for SMEs with AI-powered demand forecasting, vendor scoring, and blockchain audit trails.",
 }
 

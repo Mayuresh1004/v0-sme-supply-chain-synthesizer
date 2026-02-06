@@ -50,7 +50,7 @@ const BOT_RESPONSES: { pattern: RegExp; reply: string }[] = [
   {
     pattern: /hello|hi|hey/i,
     reply:
-      "Hello! I'm the AIO5 Supply-Chain Assistant. I can help you with inventory status, vendor performance, demand forecasts, and audit logs. What would you like to know?",
+      "Hello! I'm the Invenza Supply-Chain Assistant. I can help you with inventory status, vendor performance, demand forecasts, and audit logs. What would you like to know?",
   },
   {
     pattern: /reorder/i,
@@ -73,7 +73,7 @@ const INITIAL_MESSAGE: ChatMessage = {
   id: "welcome",
   role: "assistant",
   content:
-    "Welcome to AIO5 Assistant! I can help you with inventory, vendors, forecasts, and audit data. How can I help you today?",
+    "Welcome to Invenza Assistant! I can help you with inventory, vendors, forecasts, and audit data. How can I help you today?",
   timestamp: new Date(),
 }
 
@@ -150,7 +150,7 @@ export function ChatbotWidget() {
         )}
         style={{ height: "min(520px, calc(100vh - 120px))" }}
         role="dialog"
-        aria-label="AIO5 Chat Assistant"
+        aria-label="Invenza Chat Assistant"
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border bg-primary px-4 py-3">
@@ -160,7 +160,7 @@ export function ChatbotWidget() {
             </div>
             <div>
               <p className="text-sm font-semibold leading-none text-primary-foreground">
-                AIO5 Assistant
+                Invenza Assistant
               </p>
               <p className="mt-0.5 text-xs text-primary-foreground/70">
                 Supply-chain AI helper

@@ -55,11 +55,11 @@ export function AppSidebar() {
         {/* Logo */}
         <div className="flex h-14 items-center gap-2 px-4">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-sm">
-            A5
+            Iz
           </div>
           {!collapsed && (
             <span className="text-sm font-semibold tracking-tight text-sidebar-primary-foreground">
-              AIO5
+              Invenza
             </span>
           )}
           <Button

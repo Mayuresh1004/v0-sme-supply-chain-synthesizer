@@ -6,6 +6,7 @@ import { useAuth } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { AppSidebar } from "@/components/app-sidebar"
+import { ChatbotWidget } from "@/components/chatbot-widget"
 import { LoadingState } from "@/components/loading-state"
 
 /**
@@ -40,6 +41,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {children}
         </div>
       </main>
+      <ChatbotWidget />
     </div>
   )
 }
